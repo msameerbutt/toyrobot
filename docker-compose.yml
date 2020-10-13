@@ -1,0 +1,39 @@
+version: '3.4'
+services:
+
+  # The Application
+  app:
+    image: toyrobot-app
+    build:
+      dockerfile: dockerfile.php
+      context: ./dockerfiles  
+    working_dir: /var/www
+    volumes:
+      - ./src/:/var/www
+      - ./config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+    env_file: 
+      - .env
+    networks:
+      - toyrobot
+
+  # Webhost
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: toyrobot-nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8080:80"
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+      - ./src:/var/www
+    env_file: 
+      - .env 
+    depends_on:
+      - app              
+    networks:
+      - toyrobot
+
+networks:
+  toyrobot:
+    driver: bridge
