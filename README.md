@@ -21,7 +21,7 @@
 ## Automation Testing Steps
 1. docker-compose up -d
 1. docker-compose exec app bash
-1. `php ./vendor/bin/codecept run unit "Services/ToyRobotServiceTest"`
+1. `php ./vendor/bin/codecept run unit "Services/PlayTest"`
 
 ## Test Cases
 ##### SCENARIO: ACCEPTANCE OUTPUT: 3,3,NORTH
